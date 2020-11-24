@@ -36,9 +36,14 @@ class CCButton extends StatelessWidget {
       padding: const EdgeInsets.only(top:16.0),
       child: Container(
         width: double.infinity,
+        height: 60,
         child: RaisedButton(
           onPressed: onPressed,
-          child: Text(buttonText),
+          child: Text(buttonText,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w800
+          ),),
           textColor: textColor,
           color: buttonColor,
         ),
