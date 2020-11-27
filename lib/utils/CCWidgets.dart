@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 
 class CCTextField extends StatelessWidget {
   final String suffixCurrency;
+  final TextEditingController controller;
 
-  CCTextField({this.suffixCurrency});
+  CCTextField({this.suffixCurrency, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
+        controller: controller,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           border: InputBorder.none,
