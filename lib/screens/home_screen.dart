@@ -20,33 +20,40 @@ class _HomeScreenState extends State<HomeScreen> {
   String currency1;
   String currency2;
 
-
-
-  convertCurrency( CurrencyConvert ccvert) {
-
-
-
-
-       if(currency1=='EUR'){
+  convertCurrency(CurrencyConvert ccvert) {
+    if (currency1 == 'EUR') {
       double curr = double.parse(currencyController1.text);
 
-      var cc =  _currencyRepository.EURtoCurrency(ccvert, curr, currency2);
+      var cc = _currencyRepository.EURtoCurrency(ccvert, curr, currency2);
+
+      setState(() {
+        currencyController2.text = cc.toStringAsFixed(2);
+      });
+    } else if (currency1 == 'CAD') {
+      double curr = double.parse(currencyController1.text);
+
+      var cc = _currencyRepository.CADtoCurrency(ccvert, curr, currency2);
+
+      setState(() {
+        currencyController2.text = cc.toStringAsFixed(2);
+      });
+    } else if (currency1 == 'CHF') {
+      double curr = double.parse(currencyController1.text);
+
+      var cc = _currencyRepository.CADtoCurrency(ccvert, curr, currency2);
+
+      setState(() {
+        currencyController2.text = cc.toStringAsFixed(2);
+      });
+    } else if (currency1 == 'USD') {
+      double curr = double.parse(currencyController1.text);
+
+      var cc = _currencyRepository.CADtoCurrency(ccvert, curr, currency2);
 
       setState(() {
         currencyController2.text = cc.toStringAsFixed(2);
       });
     }
-
-    else if(currency1=='CAD'){
-      double curr = double.parse(currencyController1.text);
-
-      var cc =  _currencyRepository.CADtoCurrency(ccvert, curr, currency2);
-
-      setState(() {
-        currencyController2.text = cc.toStringAsFixed(2);
-      });
-    }
-
   }
 
   @override
@@ -54,39 +61,219 @@ class _HomeScreenState extends State<HomeScreen> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  height: height * 0.7,
-                  padding: EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Container(
+                height: height * 0.7,
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    appBar(),
+                    homeText(),
+                    textfield(),
+                    currencySelector(),
+                    buttonwidget(),
+                    underlineText(),
+                  ],
+                ),
+              ),
+              Container(
+                height: height * 0.6,
+                decoration: BoxDecoration(
+                    color: kBlueContainer,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      topLeft: Radius.circular(20),
+                    )),
+                child: Container(
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      appBar(),
-                      homeText(),
-                      textfield(),
-                      currencySelector(),
-                      buttonwidget(),
-                      underlineText(),
-                    ],
-                  ),
-                ),
+                      Container(
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Column(
+                                children: [
+                                  Text('Past 30 Days',
+                                  style: TextStyle(
+                                    color: Colors.white
+                                  ),),
+                                  Container(
+                                    height: 5,
+                                    width: 5,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: kColourGreen),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Column(
+                                children: [
+                                  Text('Past 90 Days',
+                                    style: TextStyle(
+                                        color: Colors.white
+                                    ),),
+                                 /* Container(
+                                    height: 5,
+                                    width: 5,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: kColourGreen),
+                                  ),*/
+
+                                ],
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20,),
+                      Container(
+                        height: 250,
+                        child: Stack(
+                          children: [
+                            Container(),
+                            Container(
+                              child: Column(
+                                  children: List.generate(
+                                7,
+                                (index) => Padding(
+                                  padding: const EdgeInsets.only(top:15.0, bottom: 15, left: 10),
+                                  child: Container(
+                                    height: 3,
+                                    width: 3,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              )),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                child: Row(
+                                    children: List.generate(
+                                  10,
+                                  (index) => Padding(
+                                    padding: const EdgeInsets.only(top:18.0,  left: 10,right: 15),
+                                    child: Container(
+                                      height: 3,
+                                      width: 3,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                )),
+                              ),
+                            ),
+
+                            Positioned(
+                              top: 50,
+                              left: 80,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      color: kColourGreen,
+                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text('15 Jun',
+                                        style: TextStyle(
+                                          color: Colors.white
+                                        ),),
+                                        Text(
+                                          '1 $currency1 =  1.454',
+                                          style: TextStyle(
+                                              color: Colors.white
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 20,),
+                                  Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration:
+                                    BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                        color: kColourGreen),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text('01 Jun',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),
+                            Text('07 Jun',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),),
+                            Text('15 Jun',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),),
+                            Text('21 Jun',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),),
+                          ],
+                        ),
+                      ),
                 Container(
-                  height: height *0.4,
-                  decoration: BoxDecoration(
-                      color: kBlueContainer,
-                      borderRadius: BorderRadius.only(
-                        topRight:Radius.circular(20),
-                        topLeft: Radius.circular(20),)
+                  margin: EdgeInsets.only(
+                    top: 10,
+                  ),
+                  child: Text(
+                    'Get rate alerts straight to your email inbox',
+                    style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.white),
                   ),
                 )
 
-              ],
-            ),
+
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
-      ),
+      )),
     );
   }
 
@@ -141,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 5,
               width: 5,
               decoration:
-              BoxDecoration(shape: BoxShape.circle, color: kColourGreen),
+                  BoxDecoration(shape: BoxShape.circle, color: kColourGreen),
             ),
           )
         ],
@@ -154,47 +341,38 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         CCTextField(
           controller: currencyController1,
-          suffixCurrency:currency1,
+          suffixCurrency: currency1,
         ),
         SizedBox(
           height: 10,
         ),
-        CCTextField(
-          controller: currencyController2,
-          suffixCurrency: currency2
-        ),
+        CCTextField(controller: currencyController2, suffixCurrency: currency2),
       ],
     );
   }
 
   buttonwidget() {
     return CCButton(
-      onPressed: () async{
+      onPressed: () async {
         var ccTxt1 = currencyController1.text;
         var ccTxt2 = currencyController2.text;
 
-        if( ccTxt1.isEmpty){
+        if (ccTxt1.isEmpty) {
           //Scaffold.of(context).showSnackBar(SnackBar(content: Text('select Currency')));
 
           return;
-        }
-
-         else if(currency1.isEmpty && currency2.isEmpty){
+        } else if (currency1.isEmpty && currency2.isEmpty) {
           return;
-        }else {
-          var cc = await _currencyRepository.currencyXchange(
-              currency1, currency2);
+        } else {
+          var cc =
+              await _currencyRepository.currencyXchange(currency1, currency2);
 
           var cd = cc.rates.cAD;
-
 
           print(cd);
 
           convertCurrency(cc);
         }
-        
-
-
       },
       buttonText: 'Convert',
       textColor: Colors.white,
@@ -225,18 +403,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       currency1 = _selectedCurrency.currencyName;
                     });
                   },
-                  items: currency.map(
-                        (curr) =>
-                        DropdownMenuItem<CurrencyDropDown>(
-                            value: curr, child: Text(curr.currencyName)),
-                  ).toList(),
+                  items: currency
+                      .map(
+                        (curr) => DropdownMenuItem<CurrencyDropDown>(
+                            value: curr,
+                            child: Row(
+                              children: [
+                                curr.icon,
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(curr.currencyName),
+                              ],
+                            )),
+                      )
+                      .toList(),
                 ),
               ),
             ),
           ),
-
           Icon(Icons.repeat),
-
           Expanded(
             child: Container(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -254,17 +440,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       currency2 = _selectedCurrency2.currencyName;
                     });
                   },
-                  items: currency.map(
-                        (curr) =>
-                        DropdownMenuItem<CurrencyDropDown>(
-                            value: curr, child: Text(curr.currencyName)),
-                  ).toList(),
+                  items: currency
+                      .map(
+                        (curr) => DropdownMenuItem<CurrencyDropDown>(
+                            value: curr,
+                            child: Row(
+                              children: [
+                                curr.icon,
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(curr.currencyName),
+                              ],
+                            )),
+                      )
+                      .toList(),
                 ),
               ),
             ),
           ),
-
-
         ],
       ),
     );
@@ -272,15 +466,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   underlineText() {
     return Container(
-      margin: EdgeInsets.only(top: 10,),
+      margin: EdgeInsets.only(
+        top: 10,
+      ),
       child: Text(
         'Mid-Market exchange rate at 13:30 UTC',
         style: TextStyle(
-          color: kColourBlue,
-          decoration:TextDecoration.underline,
-          decorationColor: kColourBlue
-
-        ),
+            color: kColourBlue,
+            decoration: TextDecoration.underline,
+            decorationColor: kColourBlue),
       ),
     );
   }

@@ -121,54 +121,64 @@ class CurrencyRepository {
   }
 
   double CHFtoCurrency(
-      double exchangeRate, double currency1, String currency2) {
-    double rate = exchangeRate;
+      CurrencyConvert exchangeRate, double currency1, String currency2) {
+    double CADrate = exchangeRate.rates.cAD;
+    double NGNrate = exchangeRate.rates.cHF;
+    double EURrate = exchangeRate.rates.eUR;
+    double USDrate = exchangeRate.rates.uSD;
+
     double result;
 
     if (currency2 == 'CAD') {
-      result = rate * currency1;
-      return result;
-    }
-
-    if (currency2 == 'EUR') {
-      result = rate * currency1;
+      result = CADrate * currency1;
       return result;
     }
 
     if (currency2 == 'NGN') {
-      result = rate * currency1;
+      result = NGNrate * currency1;
+      return result;
+    }
+
+    if (currency2 == 'EUR') {
+      result = EURrate * currency1;
       return result;
     }
 
     if (currency2 == 'USD') {
-      result = rate * currency1;
+      result = USDrate * currency1;
       return result;
     }
   }
 
   double USDtoCurrency(
-      double exchangeRate, double currency1, String currency2)  {
-    double rate = exchangeRate;
+      CurrencyConvert exchangeRate, double currency1, String currency2) {
+    double CADrate = exchangeRate.rates.cAD;
+    double CHFrate = exchangeRate.rates.cHF;
+    double EURrate = exchangeRate.rates.eUR;
+    double NGNrate = exchangeRate.rates.uSD;
+
     double result;
 
     if (currency2 == 'CAD') {
-      result = rate * currency1;
+      result = CADrate * currency1;
       return result;
     }
 
     if (currency2 == 'CHF') {
-      result = rate * currency1;
+      result = CHFrate * currency1;
+      return result;
+    }
+
+    if (currency2 == 'EUR') {
+      result = EURrate * currency1;
       return result;
     }
 
     if (currency2 == 'NGN') {
-      result = rate * currency1;
-      return result;
-    }
-
-    if (currency2 == 'USD') {
-      result = rate * currency1;
+      result = NGNrate * currency1;
       return result;
     }
   }
+
+
 }
