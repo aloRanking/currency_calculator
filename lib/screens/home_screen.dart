@@ -12,22 +12,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   CurrencyRepository _currencyRepository = CurrencyRepository();
-  CurrencyDropDown _selectedCurrency;
-  CurrencyDropDown _selectedCurrency2;
+  CurrencyDropDown _selectedCurrency = currencyList[0];
+  CurrencyDropDown _selectedCurrency2 = currencyList[1];
 
   TextEditingController currencyController1 = TextEditingController();
   TextEditingController currencyController2 = TextEditingController();
-  String currency1;
-  String currency2;
+  String currency1 = currencyList[0].currencyName;
+  String currency2 = currencyList[1].currencyName;
+  double currencyRate = 0.0;
 
   convertCurrency(CurrencyConvert ccvert) {
+
     if (currency1 == 'EUR') {
       double curr = double.parse(currencyController1.text);
-
       var cc = _currencyRepository.EURtoCurrency(ccvert, curr, currency2);
 
+      print(ccvert.rates.cAD);
+
       setState(() {
-        currencyController2.text = cc.toStringAsFixed(2);
+        currencyRate = cc[0];
+        currencyController2.text = cc[1].toStringAsFixed(2);
       });
     } else if (currency1 == 'CAD') {
       double curr = double.parse(currencyController1.text);
@@ -35,7 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
       var cc = _currencyRepository.CADtoCurrency(ccvert, curr, currency2);
 
       setState(() {
-        currencyController2.text = cc.toStringAsFixed(2);
+        currencyRate = cc[0];
+        currencyController2.text = cc[1].toStringAsFixed(2);
       });
     } else if (currency1 == 'CHF') {
       double curr = double.parse(currencyController1.text);
@@ -43,7 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
       var cc = _currencyRepository.CADtoCurrency(ccvert, curr, currency2);
 
       setState(() {
-        currencyController2.text = cc.toStringAsFixed(2);
+        currencyRate = cc[0];
+        currencyController2.text = cc[1].toStringAsFixed(2);
       });
     } else if (currency1 == 'USD') {
       double curr = double.parse(currencyController1.text);
@@ -51,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
       var cc = _currencyRepository.CADtoCurrency(ccvert, curr, currency2);
 
       setState(() {
-        currencyController2.text = cc.toStringAsFixed(2);
+        currencyRate = cc[0];
+        currencyController2.text = cc[1].toStringAsFixed(2);
       });
     }
   }
@@ -91,179 +98,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      Container(
-                        child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          //crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              child: Column(
-                                children: [
-                                  Text('Past 30 Days',
-                                  style: TextStyle(
-                                    color: Colors.white
-                                  ),),
-                                  Container(
-                                    height: 5,
-                                    width: 5,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: kColourGreen),
-                                  ),
-
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                children: [
-                                  Text('Past 90 Days',
-                                    style: TextStyle(
-                                        color: Colors.white
-                                    ),),
-                                 /* Container(
-                                    height: 5,
-                                    width: 5,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: kColourGreen),
-                                  ),*/
-
-                                ],
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
+                      topText(),
                       SizedBox(height: 20,),
-                      Container(
-                        height: 250,
-                        child: Stack(
-                          children: [
-                            Container(),
-                            Container(
-                              child: Column(
-                                  children: List.generate(
-                                7,
-                                (index) => Padding(
-                                  padding: const EdgeInsets.only(top:15.0, bottom: 15, left: 10),
-                                  child: Container(
-                                    height: 3,
-                                    width: 3,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              )),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                child: Row(
-                                    children: List.generate(
-                                  10,
-                                  (index) => Padding(
-                                    padding: const EdgeInsets.only(top:18.0,  left: 10,right: 15),
-                                    child: Container(
-                                      height: 3,
-                                      width: 3,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                )),
-                              ),
-                            ),
-
-                            Positioned(
-                              top: 50,
-                              left: 80,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: kColourGreen,
-                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                      topRight: Radius.circular(10)),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text('15 Jun',
-                                        style: TextStyle(
-                                          color: Colors.white
-                                        ),),
-                                        Text(
-                                          '1 $currency1 =  1.454',
-                                          style: TextStyle(
-                                              color: Colors.white
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 20,),
-                                  Container(
-                                    height: 10,
-                                    width: 10,
-                                    decoration:
-                                    BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2,
-                                        ),
-                                        color: kColourGreen),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                      currencyGraph(),
                       SizedBox(height: 10,),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text('01 Jun',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),),
-                            Text('07 Jun',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),),
-                            Text('15 Jun',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),),
-                            Text('21 Jun',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),),
-                          ],
-                        ),
-                      ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 10,
-                  ),
-                  child: Text(
-                    'Get rate alerts straight to your email inbox',
-                    style: TextStyle(
-                        color: Colors.white,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.white),
-                  ),
-                )
+                      graphDate(),
+                      bottomText()
 
 
                     ],
@@ -273,7 +113,198 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      )),
+          )),
+    );
+  }
+
+  Container topText() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: Column(
+              children: [
+                Text('Past 30 Days',
+                  style: TextStyle(
+                      color: Colors.white
+                  ),),
+                SizedBox(height: 5,),
+                Container(
+                  height: 5,
+                  width: 5,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: kColourGreen),
+                ),
+
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              children: [
+                Text('Past 90 Days',
+                  style: TextStyle(
+                      color: Colors.white
+                  ),),
+                /* Container(
+                                  height: 5,
+                                  width: 5,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: kColourGreen),
+                                ),*/
+
+              ],
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Container currencyGraph() {
+    return Container(
+      height: 250,
+      child: Stack(
+        children: [
+          Container(),
+          Container(
+            child: Column(
+                children: List.generate(
+                  7,
+                      (index) =>
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 15.0, bottom: 15, left: 10),
+                        child: Container(
+                          height: 3,
+                          width: 3,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white),
+                        ),
+                      ),
+                )),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              child: Row(
+                  children: List.generate(
+                    11,
+                        (index) =>
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 18.0, left: 10, right: 15),
+                          child: Container(
+                            height: 3,
+                            width: 3,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white),
+                          ),
+                        ),
+                  )),
+            ),
+          ),
+
+          Positioned(
+            top: 50,
+            left: 80,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(4),
+                  height: 50,
+                  //width: 100,
+                  decoration: BoxDecoration(
+                    color: kColourGreen,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                        topRight: Radius.circular(10)),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('15 Jun',
+                        style: TextStyle(
+                            color: Colors.white
+                        ),),
+                      Text(
+                        '1 $currency1 =  ${currencyRate.toStringAsFixed(
+                            2)} $currency2',
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20,),
+                Container(
+                  height: 10,
+                  width: 10,
+                  decoration:
+                  BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
+                      color: kColourGreen),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Container graphDate() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text('01 Jun',
+            style: TextStyle(
+              color: Colors.white,
+            ),),
+          Text('07 Jun',
+            style: TextStyle(
+              color: Colors.white,
+            ),),
+          Text('15 Jun',
+            style: TextStyle(
+              color: Colors.white,
+            ),),
+          Text('21 Jun',
+            style: TextStyle(
+              color: Colors.white,
+            ),),
+        ],
+      ),
+    );
+  }
+
+  Container bottomText() {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 10,
+      ),
+      child: Text(
+        'Get rate alerts straight to your email inbox',
+        style: TextStyle(
+            color: Colors.white,
+            decoration: TextDecoration.underline,
+            decorationColor: Colors.white),
+      ),
     );
   }
 
@@ -352,31 +383,35 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   buttonwidget() {
-    return CCButton(
-      onPressed: () async {
-        var ccTxt1 = currencyController1.text;
-        var ccTxt2 = currencyController2.text;
+    return Builder(
+        builder: (BuildContext context) {
+          return CCButton(
+            onPressed: () async {
+              var ccTxt1 = currencyController1.text;
+              var ccTxt2 = currencyController2.text;
 
-        if (ccTxt1.isEmpty) {
-          //Scaffold.of(context).showSnackBar(SnackBar(content: Text('select Currency')));
+              if (ccTxt1.isEmpty) {
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(content: Text('Input Currency')));
 
-          return;
-        } else if (currency1.isEmpty && currency2.isEmpty) {
-          return;
-        } else {
-          var cc =
-              await _currencyRepository.currencyXchange(currency1, currency2);
+                return;
+              } else {
+                var cc =
+                await _currencyRepository.currencyXchange2(
+                    currency1, currency2);
 
-          var cd = cc.rates.cAD;
+                var cd = cc.rates.cAD;
 
-          print(cd);
+                print(cd);
 
-          convertCurrency(cc);
+                convertCurrency(cc);
+              }
+            },
+            buttonText: 'Convert',
+            textColor: Colors.white,
+            buttonColor: kColourGreen,
+          );
         }
-      },
-      buttonText: 'Convert',
-      textColor: Colors.white,
-      buttonColor: kColourGreen,
     );
   }
 
@@ -395,7 +430,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   border: Border.all(color: Colors.grey[350])),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<CurrencyDropDown>(
-                  hint: Text('Select Currency'),
+                  //hint: Text('Select Currency'),
                   value: _selectedCurrency,
                   onChanged: (value) {
                     setState(() {
@@ -403,7 +438,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       currency1 = _selectedCurrency.currencyName;
                     });
                   },
-                  items: currency
+                  items: currencyList
                       .map(
                         (curr) => DropdownMenuItem<CurrencyDropDown>(
                             value: curr,
@@ -440,7 +475,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       currency2 = _selectedCurrency2.currencyName;
                     });
                   },
-                  items: currency
+                  items: currencyList
                       .map(
                         (curr) => DropdownMenuItem<CurrencyDropDown>(
                             value: curr,

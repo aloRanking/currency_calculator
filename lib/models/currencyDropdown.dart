@@ -11,10 +11,12 @@ class CurrencyDropDown{
 
 }
 
-List<CurrencyDropDown> currency = [
+List<CurrencyDropDown> currencyList = [
+  CurrencyDropDown(currencyName: 'EUR',
+      icon: Image.asset('images/united-kingdom.png', height: 20, width: 20)),
   CurrencyDropDown(currencyName: 'CAD', icon: Image.asset('images/canada.png', height: 20, width: 20, )),
   CurrencyDropDown(currencyName: 'CHF',icon: Image.asset('images/switzerland.png',height: 20, width: 20 ) ),
-  CurrencyDropDown(currencyName: 'EUR', icon: Image.asset('images/united-kingdom.png',height: 20, width: 20 )),
+
   CurrencyDropDown(currencyName: 'USD', icon: Image.asset('images/united-states.png',height: 20, width: 20 )),
   CurrencyDropDown(currencyName: 'NGN',icon: Image.asset('images/nigeria.png', height: 20, width: 20))
 ];
