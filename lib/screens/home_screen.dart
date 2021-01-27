@@ -1,8 +1,10 @@
+import 'package:currencycalculator/main.dart';
 import 'package:currencycalculator/models/currencyDropdown.dart';
 import 'package:currencycalculator/models/currency_converter.dart';
 import 'package:currencycalculator/repository/currency_repo.dart';
 import 'package:currencycalculator/utils/CCWidgets.dart';
 import 'package:currencycalculator/utils/colors.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,6 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String currency1 = currencyList[0].currencyName;
   String currency2 = currencyList[1].currencyName;
   double currencyRate = 0.0;
+
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
 
   convertCurrency(CurrencyConvert ccvert) {
 
@@ -98,11 +105,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      topText(),
                       SizedBox(height: 20,),
-                      currencyGraph(),
+                      topText(),
+                      //SizedBox(height: 20,),
+                      LineChart(
+                      mainData()
+                      ),
+
+                      
+                     /*  currencyGraph(),
                       SizedBox(height: 10,),
                       graphDate(),
+                       */
                       bottomText()
 
 
@@ -513,4 +527,106 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+LineChartData mainData() {
+    return LineChartData(
+      gridData: FlGridData(
+        show: false,
+        drawVerticalLine: true,
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 3,
+            dashArray: [5,10]
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
+        bottomTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
+          getTextStyles: (value) =>
+              const TextStyle(color: Colors.white70, fontSize: 14),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 2:
+                return '31 DEC';
+              case 7:
+                return '7 JAN';
+              case 11:
+                return '15 JAN';
+                case 15:
+                return '23 JAN';
+            }
+            return '';
+          },
+          margin: 8,
+        ),
+        leftTitles: SideTitles(
+          showTitles: false,
+          getTextStyles: (value) => const TextStyle(
+            color: Color(0xff67727d),
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 1:
+                return '10k';
+              case 3:
+                return '30k';
+              case 5:
+                return '50k';
+            }
+            return '';
+          },
+          reservedSize: 22,
+          margin: 12,
+        ),
+      ),
+      borderData:
+          FlBorderData(show: false, border: Border(left: BorderSide(color: Colors.white, width: 0.5),
+          bottom: BorderSide(color: Colors.white, width: 1))),
+      minX: 0,
+      maxX: 16,
+      minY: 0,
+      maxY: 6,
+      lineBarsData: [
+        LineChartBarData(
+          spots: [
+            FlSpot(0, 3),
+            FlSpot(2.6, 2),
+            FlSpot(4.9, 5),
+            FlSpot(5.8, 3.1),
+            FlSpot(6, 4),
+            FlSpot(7.5, 3),
+            FlSpot(10, 4),
+             FlSpot(11.2, 4),
+            FlSpot(13.6, 3),
+            FlSpot(15, 4),
+            
+          ],
+          isCurved: true,
+          colors: gradientColors,
+          barWidth: 2,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+
 }
